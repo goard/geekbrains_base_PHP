@@ -6,5 +6,6 @@
   $a = $a + $b;
   $b = $a - $b;
   $a = $a - $b;
-  echo "a = $a, b = $b"
+  echo "a = $a, b = $b";
+
 ?>
