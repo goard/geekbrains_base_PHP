@@ -27,10 +27,9 @@ if (!empty($_FILES['img'])) {
       <div>
         <?php
         $arrImg = scandir("img/");
-        for ($i = 2; $i < count($arrImg); $i++) {
-          echo "<a href=\"img/$arrImg[$i]\" target=\"_blank\"> <img src=\"img/$arrImg[$i]\" alt= \"image\" width=\"450px\" /> </a> <br/>";
-        };
-        ?>
+        for ($i = 2; $i < count($arrImg); $i++) : ?>
+          <a href="img/<?= $arrImg[$i] ?>" target="_blank"> <img src="img/<?= $arrImg[$i] ?>" alt="image" width="450px" /> </a> <br />
+        <?php endfor; ?>
       </div>
     </div>
   </main>
