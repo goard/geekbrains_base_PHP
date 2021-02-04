@@ -7,7 +7,7 @@ if (!empty($_FILES)) {
   $nameImg = $_POST['imgName'];
   if ($tmpFile["size"] <= 2097152) {
     $link = mysqli_connect("localhost", "root", "", "dataimg");
-    if (!$link) die('Ошибка соединения' . mysqli_error($link));
+    if (!$link) die('Ошибка соединения' . mysqli_connect_error());
     $result = mysqli_query($link, "SELECT path,name FROM img_table");
     $coincidence = false;
     while ($row = mysqli_fetch_row($result)) {
