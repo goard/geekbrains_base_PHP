@@ -1,7 +1,7 @@
 <?php
 $page = "admin";
 $view = $_GET ? $_GET['view'] : null;
-$idProduct = $view === 'edit' ? $_GET['id_product'] : null;
+$idProduct = $view === 'edit' ? (int)$_GET['id_product'] : null;
 $link = mysqli_connect("localhost", "root", "", "shop");
 if (!$link) die('Ошибка соединения' . mysqli_error($link));
 $idProduct ? ($result = mysqli_query($link, "SELECT * FROM goods WHERE id_goods=$idProduct")) : ($result = mysqli_query($link, "SELECT * FROM goods"));

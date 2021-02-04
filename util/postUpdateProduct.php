@@ -10,10 +10,10 @@ if (isset($_FILES)) {
     $tmpFile = $_FILES["file"];
     $nameImg = hash_file('md5', $tmpFile['tmp_name']) . '.' . explode('.', $_FILES['file']['name'])[1];
     $pathImgProduct = $upload_dir . $nameImg;
-    $idProduct = $_POST['id'];
-    $nameProduct = $_POST['name'];
-    $priceProduct = $_POST['price'];
-    $quantityProduct = $_POST['quantity'];
+    $idProduct = (int)$_POST['id'];
+    $nameProduct = mysqli_real_escape_string($link, htmlspecialchars(strip_tags($_POST['name'])));
+    $priceProduct = (float)$_POST['price'];
+    $quantityProduct = (int)$_POST['quantity'];
     $timeStamp = date("Y-m-d H:i:s");;
     if ($tmpFile["size"] <= 2097152) {
       move_uploaded_file($tmpFile["tmp_name"], '../' . $pathImgProduct);

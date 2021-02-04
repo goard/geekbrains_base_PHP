@@ -11,9 +11,9 @@ if (isset($_FILES)) {
     $tmpFile = $_FILES["file"];
     $nameImg = hash_file('md5', $tmpFile['tmp_name']) . '.' . explode('.', $_FILES['file']['name'])[1];
     $pathImgProduct = $upload_dir . $nameImg;
-    $nameProduct = $_POST['name'];
-    $priceProduct = $_POST['price'];
-    $quantityProduct = $_POST['quantity'];
+    $nameProduct = mysqli_real_escape_string($link, htmlspecialchars(strip_tags($_POST['name'])));
+    $priceProduct = (float)$_POST['price'];
+    $quantityProduct = (int)$_POST['quantity'];
     if ($tmpFile["size"] <= 2097152) {
       $link = mysqli_connect("localhost", "root", "", "shop");
       if (!$link) die('Ошибка соединения' . mysqli_connect_error());
