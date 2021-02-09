@@ -1,13 +1,18 @@
 <?php
-$page = "product";
-$idProduct = (int)$_GET['id_product'];
-$link = mysqli_connect("localhost", "root", "", "shop");
-if (!$link) die('Ошибка соединения' . mysqli_error($link));
-mysqli_query($link, "INSERT INTO goods_counter (id_goods, counter) VALUE ($idProduct, 1) ON DUPLICATE KEY UPDATE counter = counter + 1");
-$result = mysqli_query($link, "SELECT * FROM goods INNER JOIN goods_counter ON goods.id_goods=goods_counter.id_goods WHERE goods.id_goods=$idProduct");
-$row = mysqli_fetch_assoc($result);
-// var_dump($row);
-mysqli_close($link);
+session_start();
+var_dump($_SESSION);
+if ($_SESSION['login']) {
+  $page = "product";
+  $idProduct = (int)$_GET['id_product'];
+  $link = mysqli_connect("localhost", "root", "", "shop");
+  if (!$link) die('Ошибка соединения' . mysqli_error($link));
+  mysqli_query($link, "INSERT INTO goods_counter (id_goods, counter) VALUE ($idProduct, 1) ON DUPLICATE KEY UPDATE counter = counter + 1");
+  $result = mysqli_query($link, "SELECT * FROM goods INNER JOIN goods_counter ON goods.id_goods=goods_counter.id_goods WHERE goods.id_goods=$idProduct");
+  $row = mysqli_fetch_assoc($result);
+  mysqli_close($link);
+} else {
+  header('Location: http://localhost:8888/basicphp');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,9 +32,19 @@ mysqli_close($link);
     <div class="container">
       <h5 class="text-center"><?= $row['name'] ?></h5>
       <img src="<?= $row['path_img'] ?>" class="img-fluid center" alt="Responsive image">
-      <div class="row ml-0 mr-0 justify-content-between align-items-center">
+      <div class="row ml-0 mr-0 mt-1 justify-content-between align-items-center">
         <h4>Цена <?= $row['price'] ?>&#8381;</h4>
+        <h6>Доступное количество <?= $row['quantity'] ?></h6>
         <h6>Просмотры <?= $row['counter'] ?></h6>
+
+        <form enctype="multipart/form-data" method="POST" action="util/postAddGoodsToCart.php">
+          <div class='form-group'>
+            <input type="hidden" name="id_product" value="<?= $idProduct ?>" />
+            <label for='inputQuantity'>Количество</label>
+            <input type='number' class='form-control' id='inputQuantity' placeholder='Количество' name="quantity" value="1" max="<?= $row['quantity'] ?>" required />
+          </div>
+          <button type='submit' class='btn btn-primary'>Добавить в корзину</button>
+        </form>
       </div>
 
     </div>

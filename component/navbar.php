@@ -1,3 +1,7 @@
+<?php
+$role = $_SESSION['role'];
+$page = $GLOBALS['page'];
+?>
 <nav class='navbar navbar-expand-lg navbar-light bg-light'>
   <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarNav' aria-controls='navbarNav' aria-expanded='false' aria-label='Toggle navigation'>
     <span class='navbar-toggler-icon'></span>
@@ -7,10 +11,15 @@
       <li class='nav-item active'>
         <a class='nav-link' href='catalog.php'>Каталог товара<span class='sr-only'>(current)</span></a>
       </li>
-      <li class='nav-item'>
+      <?php echo ($role === 'admin' ? "<li class='nav-item'>
         <a class='nav-link' href='admin.php'>Редактирование товара</a>
+      </li>" : null) ?>
+
+      <li class='nav-item'>
+        <a class='nav-link' href='cart.php'>Корзина товара</a>
       </li>
     </ul>
-    <?php echo ($GLOBALS["page"] === "admin" ? "<a href='admin.php?view=add' class='btn btn-success active' role='button' aria-pressed='true'>Добавить товар</a>" : null); ?>
+    <?php echo ($page === "admin" ? "<a href='admin.php?view=add' class='btn btn-success active mr-1' role='button' aria-pressed='true'>Добавить товар</a>" : null); ?>
+    <a href="util/logout.php" class="btn btn-secondary" role="button">Выйти</a>
   </div>
 </nav>

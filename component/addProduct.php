@@ -1,12 +1,13 @@
 <?php
 // GET DATA BASEDATE MYSQL
 $row = $view === 'edit' ? mysqli_fetch_assoc($result) : null;
+// var_dump($row);
 ?>
 <form enctype="multipart/form-data" method="POST" action="<?= $row ? 'util/postUpdateProduct.php' : 'util/postAddProduct.php'; ?>">
   <input type="hidden" name="id" value="<?= $row['id_goods'] ?>" />
   <div class='form-group'>
     <label for='inputImg'>Изображение</label>
-    <input type='file' class='form-control-file' id='inputImg' name='file' accept="image/png,image/jpeg" required>
+    <input type='file' class='form-control-file' id='inputImg' name='file' accept="image/png,image/jpeg" <?php echo (($view === 'edit') ? null : "required"); ?>>
   </div>
   <div class='form-group'>
     <label for='inputName'>Наименование</label>
