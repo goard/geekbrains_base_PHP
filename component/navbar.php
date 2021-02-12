@@ -14,12 +14,27 @@ $page = $GLOBALS['page'];
       <?php echo ($role === 'admin' ? "<li class='nav-item'>
         <a class='nav-link' href='admin.php'>Редактирование товара</a>
       </li>" : null) ?>
-
+      <?php echo ($role === 'admin' ? "<li class='nav-item'>
+        <a class='nav-link' href='orders.php'>Ваши отправления</a>
+      </li>" : null) ?>
       <li class='nav-item'>
         <a class='nav-link' href='cart.php'>Корзина товара</a>
       </li>
     </ul>
-    <?php echo ($page === "admin" ? "<a href='admin.php?view=add' class='btn btn-success active mr-1' role='button' aria-pressed='true'>Добавить товар</a>" : null); ?>
+    <?php
+    if ($page === "admin") :
+    ?>
+      <a href='admin.php?view=add' class='btn btn-success active mr-1' role='button' aria-pressed='true'>Добавить товар</a>
+    <?php
+    endif;
+    ?>
+    <?php
+    if ($page === "cart" && $result->num_rows) :
+    ?>
+      <a href='checkout.php?view=add' class='btn btn-success active mr-1' role='button' aria-pressed='true'>Оформить заказ</a>
+    <?php
+    endif;
+    ?>
     <a href="util/logout.php" class="btn btn-secondary" role="button">Выйти</a>
   </div>
 </nav>
